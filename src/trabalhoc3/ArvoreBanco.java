@@ -22,7 +22,7 @@ public class ArvoreBanco {
 	}
 
 	public boolean cadastrarCliente(ClienteBanco x) {
-		if (pesquisar(x)) {
+		if ((this.pesquisarNome(x)) && (this.pesquisarCPF(x))) {
 			return false;//n foi possivel cadastrar o cliente
 		} else {
 			this.raiz = cadastrarCliente(x, this.raiz);
@@ -36,7 +36,7 @@ public class ArvoreBanco {
 			No novoNo = new No(x);
 			return novoNo;
 		} else {
-			if (x.getNome().compareTo(this.raiz.getCliente().getNome()) < 0) { //verificar
+			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) { //verificar
 				no.setEsq(cadastrarCliente(x, no.getEsq()));
 				return no;
 			} else {
@@ -46,29 +46,96 @@ public class ArvoreBanco {
 		}
 	}
 
-	public boolean pesquisar(ClienteBanco x) {
-		if (pesquisar(x, this.raiz) != null) {
+	public boolean pesquisarNome(ClienteBanco x) {
+		if (pesquisarNome(x, this.raiz) != null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
 //colocar uma mensagem no menu
-	private No pesquisar(ClienteBanco x, No no) {
+	private No pesquisarNome(ClienteBanco x, No no) {
 		if (no != null) {
-			if (x.) {//verificar
-				no = pesquisar(x, no.getEsq());
+			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
+				no = pesquisarNome(x, no.getEsq());
 			} else {
-				if (x.getNome() == no.getCliente().getNome()) {//verificar
-					no = pesquisar(x, no.getDir());
+				if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
+					no = pesquisarNome(x, no.getDir());
 				}
 			}
 		}
 		return no;
 	}
+	
+	public boolean pesquisarCPF(ClienteBanco x) {
+		if (pesquisarCPF(x, this.raiz) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private No pesquisarCPF(ClienteBanco x, No no) {
+		if (no != null) {
+			if (x.getCpf().compareToIgnoreCase(no.getCliente().getCpf()) < 0) {//verificar
+				no = pesquisarCPF(x, no.getEsq());
+			} else {
+				if (x.getCpf().compareToIgnoreCase(no.getCliente().getCpf()) > 0) {//verificar
+					no = pesquisarCPF(x, no.getDir());
+				}
+			}
+		}
+		return no;
+	}
+	
+	
+	public String consultarDadosPessoais(ClienteBanco x) {
+		No clienteEncontrado = this.consultarDadosGerais(x, this.raiz);
+		if (clienteEncontrado != null) {
+			return clienteEncontrado.getCliente().toString() ;
+		} else {
+			return " ";
+		}
+	}
+	
+	
+	private No consultarDadosGerais(ClienteBanco x, No no) {
+		if (no != null) {
+			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
+				return pesquisarNome(x, no.getEsq());
+			} else {
+				if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
+					return  pesquisarNome(x, no.getDir());
+				}
+			}
+		}
+		return no;
+	}
+	
+	
+	public String[] listarClientesFeminino() {
+		int [] n = new int[1];
+		n[0] = 0;
+		String[] vet = new String[this.quantNos];
+		return (listarClientesFeminino(this.raiz, vet, n));
+	}
+
+	private String[] listarClientesFeminino(No no, String[] vet, int[] n) {
+		if (no != null) {
+			vet = listarClientesFeminino(no.getEsq(), vet, n);
+			if(no.getCliente().getSexo() == 'F') {
+				vet[n[0]] = no.getCliente().getNome();
+				n[0]++;
+			}
+			vet = listarClientesFeminino(no.getDir(), vet, n);
+		}
+		return vet;
+	}
+	
 
 	public boolean remover(ClienteBanco x) {
-		if (pesquisar(x, this.raiz) != null) {
+		if (pesquisarNome(x, this.raiz) != null) {
 			this.raiz = remover(x, this.raiz);
 			this.quantNos--;
 			return true;

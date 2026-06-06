@@ -1,4 +1,4 @@
-package trabalhoArvore;
+package trabalhoc3;
 
 public class ArvoreBanco {
 	private No raiz;
@@ -22,7 +22,7 @@ public class ArvoreBanco {
 	}
 
 	public boolean cadastrarCliente(ClienteBanco x) {
-		if ((this.pesquisarNome(x)) && (this.pesquisarCPF(x))) {
+		if ((this.pesquisarNome(x.getNome())) || (this.pesquisarCPF(x.getCpf()))) {
 			return false;//n foi possivel cadastrar o cliente
 		} else {
 			this.raiz = cadastrarCliente(x, this.raiz);
@@ -46,7 +46,7 @@ public class ArvoreBanco {
 		}
 	}
 
-	public boolean pesquisarNome(ClienteBanco x) {
+	public boolean pesquisarNome(String x) {
 		if (pesquisarNome(x, this.raiz) != null) {
 			return true;
 		} else {
@@ -55,12 +55,12 @@ public class ArvoreBanco {
 	}
 	
 //colocar uma mensagem no menu
-	private No pesquisarNome(ClienteBanco x, No no) {
+	private No pesquisarNome(String x, No no) {
 		if (no != null) {
-			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
+			if (x.compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
 				no = pesquisarNome(x, no.getEsq());
 			} else {
-				if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
+				if (x.compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
 					no = pesquisarNome(x, no.getDir());
 				}
 			}
@@ -68,7 +68,7 @@ public class ArvoreBanco {
 		return no;
 	}
 	
-	public boolean pesquisarCPF(ClienteBanco x) {
+	public boolean pesquisarCPF(String x) {
 		if (pesquisarCPF(x, this.raiz) != null) {
 			return true;
 		} else {
@@ -76,12 +76,12 @@ public class ArvoreBanco {
 		}
 	}
 	
-	private No pesquisarCPF(ClienteBanco x, No no) {
+	private No pesquisarCPF(String x, No no) {
 		if (no != null) {
-			if (x.getCpf().compareToIgnoreCase(no.getCliente().getCpf()) < 0) {//verificar
+			if (x.compareToIgnoreCase(no.getCliente().getCpf()) < 0) {//verificar
 				no = pesquisarCPF(x, no.getEsq());
 			} else {
-				if (x.getCpf().compareToIgnoreCase(no.getCliente().getCpf()) > 0) {//verificar
+				if (x.compareToIgnoreCase(no.getCliente().getCpf()) > 0) {//verificar
 					no = pesquisarCPF(x, no.getDir());
 				}
 			}
@@ -89,8 +89,8 @@ public class ArvoreBanco {
 		return no;
 	}
 	
-	
-	public String consultarDadosPessoais(ClienteBanco x) {
+	//o parametro tem que ser String
+	public String consultarDadosPessoais( String x) {
 		No clienteEncontrado = this.consultarDadosGerais(x, this.raiz);
 		if (clienteEncontrado != null) {
 			return clienteEncontrado.getCliente().toString() ;
@@ -99,13 +99,13 @@ public class ArvoreBanco {
 		}
 	}
 	
-	
-	private No consultarDadosGerais(ClienteBanco x, No no) {
+	//o paramentro tem que ser string
+	private No consultarDadosGerais(String x, No no) {
 		if (no != null) {
-			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
+			if (x.compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
 				return pesquisarNome(x, no.getEsq());
 			} else {
-				if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
+				if (x.compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
 					return  pesquisarNome(x, no.getDir());
 				}
 			}
@@ -145,10 +145,10 @@ public class ArvoreBanco {
 	}
 
 	public No remover(ClienteBanco x, No no) {
-		if (x == no.getCliente()) {//verificar
+		if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) {
 			no.setEsq(remover(x, no.getEsq()));
 		} else {
-			if (x == no.getCliente()) {//verificar
+			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) > 0) {
 				no.setDir(remover(x, no.getDir()));
 			} else {
 				if (no.getDir() == null) {

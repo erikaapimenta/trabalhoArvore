@@ -96,6 +96,13 @@ public class MenuArvore {
                
                 break;
             case 4:
+					System.out.println("\n===========================================");
+            	System.out.println("      MÉDIA DE IDADES DOS CLIENTES");
+            	System.out.println("===========================================");
+
+            	System.out.printf("Média das idades: %.2f anos%n",
+            			banco.mediaIdades());
+
                 break;
             case 5:
                

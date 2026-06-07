@@ -21,8 +21,8 @@ public class ArvoreBanco {
 		return this.quantNos;
 	}
 
-	public boolean cadastrarCliente(ClienteBanco x) {
-		if ((this.pesquisarNome(x.getNome())) || (this.pesquisarCPF(x.getCpf()))) {
+public boolean cadastrarCliente(ClienteBanco x) {
+		if ((this.pesquisarNome(x.getNome())) || (this.pesquisarCPF(x.getNome()))) {
 			return false;//n foi possivel cadastrar o cliente
 		} else {
 			this.raiz = cadastrarCliente(x, this.raiz);
@@ -132,10 +132,34 @@ public class ArvoreBanco {
 		}
 		return vet;
 	}
+	public int somaIdades() {
+		int[] n = new int [1];
+		n[0] = 0;
+		
+		somarIdades(this.raiz, n);
+		
+		return n[0];
+	}
 	
+	private void somarIdades(No no, int[] n) {
+		if(no != null) {
+			n[0] += no.getCliente().getIdade();
+			
+			somarIdades(no.getEsq(), n);
+			somarIdades(no.getDir(), n);
+		}
+	}
+	
+	public double mediaIdades() {
+		if (this.quantNos == 0) {
+			return 0;
+		}
+		return (double) somaIdades() / this.quantNos;
+	}
 
-	public boolean remover(ClienteBanco x) {
-		if (pesquisarNome(x, this.raiz) != null) {
+
+		public boolean remover(ClienteBanco x) {
+		if (pesquisarNome(x.getNome(), this.raiz) != null) {
 			this.raiz = remover(x, this.raiz);
 			this.quantNos--;
 			return true;
@@ -164,6 +188,7 @@ public class ArvoreBanco {
 		}
 		return no;
 	}
+
 
 	private No arrumar(No arv, No maior) {
 		if (maior.getDir() != null) {

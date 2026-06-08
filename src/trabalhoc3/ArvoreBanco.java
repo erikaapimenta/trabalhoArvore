@@ -156,6 +156,11 @@ public boolean cadastrarCliente(ClienteBanco x) {
 		}
 		return (double) somaIdades() / this.quantNos;
 	}
+	
+	//novo metodo
+    public int quantidadeClientes() {
+        return getQuantNos();
+    }
 
 
 		public boolean remover(ClienteBanco x) {

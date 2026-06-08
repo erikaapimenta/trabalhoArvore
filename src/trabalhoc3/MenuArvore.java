@@ -38,6 +38,7 @@ public class MenuArvore {
             System.out.println(" 5 Listar Clientes (Saldo > Média)");
             System.out.println(" 6 Excluir Cliente");
             System.out.println(" 7 Atualizar Dados do Cliente");
+			System.out.println(" 8 Quantidade de Clientes Cadastrados");
             System.out.println(" 0 Sair do Sistema");
             System.out.println("===========================================");
             System.out.print("Escolha uma opção: ");
@@ -112,6 +113,14 @@ public class MenuArvore {
             case 7:
                
                 break;
+		    case 8:
+                System.out.println("\n===========================================");
+                System.out.println("      QUANTIDADE DE CLIENTES");
+                System.out.println("===========================================");
+                System.out.println("Total de clientes cadastrados: "
+                        + banco.getQuantNos());
+                break;
+					
             case 0:
                 System.out.println("Saindo do sistema... Até logo!");
                 break;

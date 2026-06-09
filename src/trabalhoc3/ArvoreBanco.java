@@ -156,11 +156,6 @@ public boolean cadastrarCliente(ClienteBanco x) {
 		}
 		return (double) somaIdades() / this.quantNos;
 	}
-	
-	//novo metodo
-    public int quantidadeClientes() {
-        return getQuantNos();
-    }
 
 
 		public boolean remover(ClienteBanco x) {
@@ -193,7 +188,54 @@ public boolean cadastrarCliente(ClienteBanco x) {
 		}
 		return no;
 	}
-
+//listar clientes com saldo maior que a media de saldos
+	public double somaSaldos() {
+		double [] n = new double [1];
+		n[0] = 0;
+		
+		somaSaldos(this.raiz, n);
+		
+		return n[0];
+	}
+	
+	private void somaSaldos(No no, double [] n) {
+		if(no != null) {
+			n[0] += no.getCliente().getSaldo();
+			
+			somaSaldos(no.getEsq(), n);
+			somaSaldos(no.getDir(), n);
+		}
+	}
+	
+	public double mediaSaldos() {
+		if(this.quantNos == 0) {
+			return 0;
+		}
+		return somaSaldos() / this.quantNos;
+	}
+	
+	public String[] saldosMaiorMedia() {
+		int [] n = new int[1];
+		n[0] = 0;
+		
+		String[] vet = new String[this.quantNos];
+		
+		double media = mediaSaldos();
+		
+		saldosMaiorMedia(this.raiz, vet, n, media);
+		
+		return vet;
+	}
+	private void saldosMaiorMedia (No no, String[] vet, int[] n, double media) {
+		if(no != null) {
+			if(no.getCliente().getSaldo()> media) {
+				vet[n[0]] = no.getCliente().getNome();
+				n[0]++;
+			}
+			saldosMaiorMedia(no.getEsq(), vet, n, media);
+			saldosMaiorMedia(no.getDir(), vet, n, media);
+		}
+	}
 
 	private No arrumar(No arv, No maior) {
 		if (maior.getDir() != null) {

@@ -62,7 +62,7 @@ public class ClienteBanco {
 				"CPF:" + cpf + "/n" +
 				"Idade:" + idade + "/n" +
 				"Sexo:" + sexo + "/n" +
-				"Saldo: R$ " + String.format("%2.f", saldo) + "/n" +
+				//"Saldo: R$ " + String.format("%2.f", saldo) + "/n" +
 				"===================================================";
 	}
 	

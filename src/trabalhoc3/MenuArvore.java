@@ -61,7 +61,6 @@ public class MenuArvore {
 							System.out.println("O CPF deve possuir 11 dígitos!");
 							break;
 						}
-					}
 					System.out.print("Idade: ");
 					int idade = scan.nextInt();
 					System.out.println("Sexo: ");
@@ -113,21 +112,11 @@ public class MenuArvore {
 
 					break;
 				case 5:
-
-				case 6:
-
-					break;
-				case 7:
-
-					break;
-				case 8:
 					System.out.println("\n===========================================");
 					System.out.println("      QUANTIDADE DE CLIENTES");
 					System.out.println("===========================================");
-					System.out.println("Total de clientes cadastrados: "
-							+ banco.getQuantNos());
+					System.out.println("Total de clientes cadastrados: "+ banco.getQuantNos());
 					break;
-
 				case 0:
 					System.out.println("Saindo do sistema... Até logo!");
 					break;

@@ -21,9 +21,9 @@ public class ArvoreBanco {
 		return this.quantNos;
 	}
 
-public boolean cadastrarCliente(ClienteBanco x) {
+	public boolean cadastrarCliente(ClienteBanco x) {
 		if ((this.pesquisarNome(x.getNome())) || (this.pesquisarCPF(x.getNome()))) {
-			return false;//n foi possivel cadastrar o cliente
+			return false;
 		} else {
 			this.raiz = cadastrarCliente(x, this.raiz);
 			this.quantNos++;
@@ -36,7 +36,7 @@ public boolean cadastrarCliente(ClienteBanco x) {
 			No novoNo = new No(x);
 			return novoNo;
 		} else {
-			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) { //verificar
+			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) { 
 				no.setEsq(cadastrarCliente(x, no.getEsq()));
 				return no;
 			} else {
@@ -53,8 +53,8 @@ public boolean cadastrarCliente(ClienteBanco x) {
 			return false;
 		}
 	}
+
 	
-//colocar uma mensagem no menu
 	private No pesquisarNome(String x, No no) {
 		if (no != null) {
 			if (x.compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
@@ -68,6 +68,7 @@ public boolean cadastrarCliente(ClienteBanco x) {
 		return no;
 	}
 	
+	//fazer por encaminhamento pré ordem (refazer)
 	public boolean pesquisarCPF(String x) {
 		if (pesquisarCPF(x, this.raiz) != null) {
 			return true;
@@ -75,7 +76,7 @@ public boolean cadastrarCliente(ClienteBanco x) {
 			return false;
 		}
 	}
-	
+
 	private No pesquisarCPF(String x, No no) {
 		if (no != null) {
 			if (x.compareToIgnoreCase(no.getCliente().getCpf()) < 0) {//verificar
@@ -88,32 +89,32 @@ public boolean cadastrarCliente(ClienteBanco x) {
 		}
 		return no;
 	}
-	
+
 	//o parametro tem que ser String
 	public String consultarDadosPessoais( String x) {
 		No clienteEncontrado = this.consultarDadosGerais(x, this.raiz);
 		if (clienteEncontrado != null) {
 			return clienteEncontrado.getCliente().toString() ;
 		} else {
-			return " ";
+			return "";
 		}
 	}
-	
+
 	//o paramentro tem que ser string
 	private No consultarDadosGerais(String x, No no) {
 		if (no != null) {
 			if (x.compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
-				return pesquisarNome(x, no.getEsq());
+				return consultarDadosGerais(x, no.getEsq());
 			} else {
 				if (x.compareToIgnoreCase(no.getCliente().getNome()) > 0) {//verificar
-					return  pesquisarNome(x, no.getDir());
+					return  consultarDadosGerais(x, no.getDir());
 				}
 			}
 		}
 		return no;
 	}
-	
-	
+
+
 	public String[] listarClientesFeminino() {
 		int [] n = new int[1];
 		n[0] = 0;
@@ -135,21 +136,21 @@ public boolean cadastrarCliente(ClienteBanco x) {
 	public int somaIdades() {
 		int[] n = new int [1];
 		n[0] = 0;
-		
+
 		somarIdades(this.raiz, n);
-		
+
 		return n[0];
 	}
-	
+
 	private void somarIdades(No no, int[] n) {
 		if(no != null) {
 			n[0] += no.getCliente().getIdade();
-			
+
 			somarIdades(no.getEsq(), n);
 			somarIdades(no.getDir(), n);
 		}
 	}
-	
+
 	public double mediaIdades() {
 		if (this.quantNos == 0) {
 			return 0;
@@ -158,7 +159,7 @@ public boolean cadastrarCliente(ClienteBanco x) {
 	}
 
 
-		public boolean remover(ClienteBanco x) {
+	public boolean remover(ClienteBanco x) {
 		if (pesquisarNome(x.getNome(), this.raiz) != null) {
 			this.raiz = remover(x, this.raiz);
 			this.quantNos--;
@@ -188,42 +189,42 @@ public boolean cadastrarCliente(ClienteBanco x) {
 		}
 		return no;
 	}
-//listar clientes com saldo maior que a media de saldos
+	//listar clientes com saldo maior que a media de saldos
 	public double somaSaldos() {
 		double [] n = new double [1];
 		n[0] = 0;
-		
+
 		somaSaldos(this.raiz, n);
-		
+
 		return n[0];
 	}
-	
+
 	private void somaSaldos(No no, double [] n) {
 		if(no != null) {
 			n[0] += no.getCliente().getSaldo();
-			
+
 			somaSaldos(no.getEsq(), n);
 			somaSaldos(no.getDir(), n);
 		}
 	}
-	
+
 	public double mediaSaldos() {
 		if(this.quantNos == 0) {
 			return 0;
 		}
 		return somaSaldos() / this.quantNos;
 	}
-	
+
 	public String[] saldosMaiorMedia() {
 		int [] n = new int[1];
 		n[0] = 0;
-		
+
 		String[] vet = new String[this.quantNos];
-		
+
 		double media = mediaSaldos();
-		
+
 		saldosMaiorMedia(this.raiz, vet, n, media);
-		
+
 		return vet;
 	}
 	private void saldosMaiorMedia (No no, String[] vet, int[] n, double media) {

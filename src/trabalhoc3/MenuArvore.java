@@ -120,10 +120,23 @@ public class MenuArvore {
 								//falta completar
 							case 5:
 								System.out.println("\n===========================================");
-								System.out.println("      LISTAR CLIENTES POR MÉDIA DE SALDOS");
-								System.out.println("===========================================");
-								break;
-								//falta completar
+					System.out.println("      CLIENTES COM SALDO ACIMA DA MÉDIA");
+					System.out.println("===========================================");
+					
+					double media = banco.mediaSaldos();
+					
+					System.out.printf("Média dos saldos: R$ %.2f%n", media);
+					String[]clientesSaldoMaior = banco.saldosMaiorMedia();
+					System.out.println("\nClientes com saldo acima da média: ");
+					for (int i = 0; i < clientesSaldoMaior.length; i++) {
+
+						if (clientesSaldoMaior[i] != null) {
+
+							System.out.println(clientesSaldoMaior[i]);
+						}
+					}
+
+					break;
 							case 6:
 								System.out.println("\n===========================================");
 								System.out.println("      		EXCLUIR CLIENTES             ");

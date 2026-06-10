@@ -54,7 +54,7 @@ public class ArvoreBanco {
 		}
 	}
 
-	
+
 	private No pesquisarNome(String x, No no) {
 		if (no != null) {
 			if (x.compareToIgnoreCase(no.getCliente().getNome()) < 0) {//verificar
@@ -67,7 +67,7 @@ public class ArvoreBanco {
 		}
 		return no;
 	}
-	
+
 	//fazer por encaminhamento pré ordem (refazer)
 	public boolean pesquisarCPF(String x) {
 		if (pesquisarCPF(x, this.raiz) != null) {
@@ -78,19 +78,23 @@ public class ArvoreBanco {
 	}
 
 	private No pesquisarCPF(String x, No no) {
+		No noEncontrado = null;
 		if (no != null) {
-			if (x.compareToIgnoreCase(no.getCliente().getCpf()) < 0) {//verificar
-				no = pesquisarCPF(x, no.getEsq());
-			} else {
-				if (x.compareToIgnoreCase(no.getCliente().getCpf()) > 0) {//verificar
-					no = pesquisarCPF(x, no.getDir());
-				}
+			if (x.equalsIgnoreCase(no.getCliente().getCpf())) {
+				return no;
 			}
-		}
-		return no;
-	}
 
-	//o parametro tem que ser String
+			noEncontrado = this.pesquisarCPF(x, no.getEsq());
+
+			if(noEncontrado == null) {
+				noEncontrado = this.pesquisarCPF(x, no.getDir());	
+			}
+
+		}
+		return noEncontrado;
+
+
+	}
 	public String consultarDadosPessoais( String x) {
 		No clienteEncontrado = this.consultarDadosGerais(x, this.raiz);
 		if (clienteEncontrado != null) {

@@ -22,7 +22,7 @@ public class ArvoreBanco {
 	}
 
 	public boolean cadastrarCliente(ClienteBanco x) {
-		if ((this.pesquisarNome(x.getNome())) || (this.pesquisarCPF(x.getNome()))) {
+		if ((this.pesquisarNome(x.getNome())) || (this.pesquisarCPF(x.getCpf()))) {
 			return false;
 		} else {
 			this.raiz = cadastrarCliente(x, this.raiz);
@@ -163,8 +163,8 @@ public class ArvoreBanco {
 	}
 
 
-	public boolean remover(ClienteBanco x) {
-		if (pesquisarNome(x.getNome(), this.raiz) != null) {
+	public boolean remover(String x) {
+		if (pesquisarNome(x, this.raiz) != null) {
 			this.raiz = remover(x, this.raiz);
 			this.quantNos--;
 			return true;
@@ -173,11 +173,11 @@ public class ArvoreBanco {
 		}
 	}
 
-	public No remover(ClienteBanco x, No no) {
-		if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) < 0) {
+	public No remover(String x, No no) {
+		if (x.compareToIgnoreCase(no.getCliente().getNome()) < 0) {
 			no.setEsq(remover(x, no.getEsq()));
 		} else {
-			if (x.getNome().compareToIgnoreCase(no.getCliente().getNome()) > 0) {
+			if (x.compareToIgnoreCase(no.getCliente().getNome()) > 0) {
 				no.setDir(remover(x, no.getDir()));
 			} else {
 				if (no.getDir() == null) {
@@ -193,6 +193,16 @@ public class ArvoreBanco {
 		}
 		return no;
 	}
+	private No arrumar(No arv, No maior) {
+		if (maior.getDir() != null) {
+			maior.setDir(arrumar(arv, maior.getDir()));
+		} else {
+			arv.setCliente(maior.getCliente());
+			maior = maior.getEsq();
+		}
+		return maior;
+	}
+
 	//listar clientes com saldo maior que a media de saldos
 	public double somaSaldos() {
 		double [] n = new double [1];
@@ -242,64 +252,19 @@ public class ArvoreBanco {
 		}
 	}
 
-	private No arrumar(No arv, No maior) {
-		if (maior.getDir() != null) {
-			maior.setDir(arrumar(arv, maior.getDir()));
-		} else {
-			arv.setCliente(maior.getCliente());
-			maior = maior.getEsq();
+	public No pesquisarCliente(String nome) {
+		return pesquisarNome(nome, this.raiz);
+	}
+	public boolean atualizarCliente (String nome, int novaIdade, char novoSexo, double novoSaldo) {
+		No cliente = pesquisarNome(nome, this.raiz);
+
+		if(cliente == null) {
+			return false;
 		}
-		return maior;
-	}
+		cliente.getCliente().setIdade(novaIdade);
+		cliente.getCliente().setSexo(novoSexo);
+		cliente.getCliente().setSaldo(novoSaldo);
 
-	public int[] CamCentral() {
-		int[] n = new int[1];
-		n[0] = 0;
-		int[] vet = new int[this.quantNos];
-		return (CamCentral(this.raiz, vet, n));
-	}
-
-	private int[] CamCentral(No no, int[] vet, int[] n) {
-		if (no != null) {
-			vet = CamCentral(no.getEsq(), vet, n);
-			vet[n[0]] = no.getInfo();
-			n[0]++;
-			vet = CamCentral(no.getDir(), vet, n);
-		}
-		return vet;
-	}
-
-	public int[] CamPreFixado() {
-		int[] n = new int[1];
-		n[0] = 0;
-		int[] vet = new int[this.quantNos];
-		return (CamPreFixado(this.raiz, vet, n));
-	}
-
-	private int[] CamPreFixado(No no, int[] vet, int[] n) {
-		if (no != null) {
-			vet[n[0]] = no.getInfo();
-			n[0]++;
-			vet = CamPreFixado(no.getEsq(), vet, n);
-			vet = CamPreFixado(no.getDir(), vet, n);
-		}
-		return vet;
-	}
-
-	public int[] CamPosFixado() {
-		int[] n = new int[1];
-		n[0] = 0;
-		int[] vet = new int[this.quantNos];
-		return (CamPosFixado(this.raiz, vet, n));
-	}
-
-	private int[] CamPosFixado(No no, int[] vet, int[] n) {
-		if (no != null) {
-			vet = CamPosFixado(no.getEsq(), vet, n);
-			vet = CamPosFixado(no.getDir(), vet, n);
-			vet[n[0]] = no.getInfo();
-			n[0]++;
-		}
-		return vet;
+		return true;
 	}
 }

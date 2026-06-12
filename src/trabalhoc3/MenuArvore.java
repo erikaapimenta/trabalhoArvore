@@ -75,6 +75,13 @@ public class MenuArvore {
 
 						System.out.print("Idade: ");
 						int idade = scan.nextInt();
+
+						while(idade <= 0) {
+							System.out.println("Idade inválida!");
+							System.out.print("Idade: ");
+							idade = scan.nextInt();
+						}
+
 						scan.nextLine();
 						System.out.println("Sexo: ");
 						char sexo = scan.nextLine().toUpperCase().charAt(0);
@@ -149,32 +156,67 @@ public class MenuArvore {
 									System.out.println(clientesSaldoMaior[i]);
 								}
 							}
-							
+
 						}else {
 							System.out.println("Não foi possível calcular a média de saldos");
 						}
-						
-						
+
+
 
 						break;
 					case 6:
 						System.out.println("\n===========================================");
 						System.out.println("      		EXCLUIR CLIENTES             ");
 						System.out.println("===========================================");
+						scan.nextLine();
 						System.out.print("Digite o nome do cliente para remoção: ");
 						String nomeRemocao = scan.nextLine();
-						
-						//boolean remocao = banco.remover(novoCliente);
+
+						boolean remocao = banco.remover(nomeRemocao);
+
+						if(remocao) {
+							System.out.println("Cliente removido!");
+						} else {
+							System.out.println("Cliente não encontrado.");
+						}
 
 
 						break;
-					
+
 					case 7:
 						System.out.println("\n===========================================");
 						System.out.println("      		ATUALIZAR DADOS DO CLIENTES             ");
 						System.out.println("===========================================");
-						System.out.print(" ");
+						scan.nextLine();
+
+						System.out.println("Digite o nome do cliente: ");
+						String nomeAtualizado = scan.nextLine();
+
+						System.out.print("Atualize sua idade: ");
+						int idadeAtualizada = scan.nextInt();
+
+						while(idadeAtualizada <= 0) {
+							System.out.println("Idade inválida!");
+							System.out.print("Atualize sua idade: ");
+							idadeAtualizada = scan.nextInt();
+							scan.nextLine();
+						}
+						System.out.print("Informe seu sexo: ");
+						char novoSexo = scan.nextLine().toUpperCase().charAt(0);
+
+						System.out.print("Novo saldo: ");
+						double novoSaldo = scan.nextDouble();
+
+						boolean atualizar = banco.atualizarCliente(nomeAtualizado, idadeAtualizada, novoSexo, novoSaldo);
+
+						if(atualizar) {
+							System.out.println("Dados atualizados!");
+						}else {
+							System.out.println("Cliente não encontrado.");
+						}
 						break;
+
+
 					case 0:
 						System.out.println("Saindo do sistema... Até logo!");
 						break;
@@ -188,12 +230,16 @@ public class MenuArvore {
 				System.out.println("Acesso negado!Credenciais incorretas. Tente novamente \n");
 			}
 
-
-
 		}
+
 
 	}
 }
+
+
+
+
+
 
 
 

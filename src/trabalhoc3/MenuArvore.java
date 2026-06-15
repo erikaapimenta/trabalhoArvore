@@ -45,7 +45,7 @@ public class MenuArvore {
 					System.out.println("===========================================");
 					System.out.println(" 1 Cadastrar Cliente");
 					System.out.println(" 2 Consultar Dados Pessoais");
-					System.out.println(" 3 Listar Clientes do Sexo Femino em Ordem Alfabética");
+					System.out.println(" 3 Listar Clientes do Sexo Feminino em Ordem Alfabética");
 					System.out.println(" 4 Consultar Média de Idades dos Clientes");
 					System.out.println(" 5 Listar Clientes com o Saldo maior que a média de saldos");
 					System.out.println(" 6 Excluir Cliente");

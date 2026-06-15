@@ -61,7 +61,7 @@ public class ClienteBanco {
 				"Nome:" + nome + "\n" +
 				"CPF:" + cpf + "\n" +
 				"Idade:" + idade + "\n" +
-				"Sexo:" + sexo + "\n" +
+				"Sexo: " + (sexo == 'F' ? "Feminino" : "Masculino") + "\n" +
 				"Saldo: R$ " + String.format("%.2f", saldo) + "\n" +
 				"===================================================";
 	}
